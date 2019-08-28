@@ -40,6 +40,8 @@ urlpatterns += [
     # one out.
 
     url("^$", direct_to_template, {"template": "index.html"}, name="home"),
+    url(r"^podcasts/", include("podcasting.urls")),
+    url(r"^feeds/podcasts/", include("podcasting.urls_feeds")),
 
     # HOMEPAGE AS AN EDITABLE PAGE IN THE PAGE TREE
     # ---------------------------------------------
