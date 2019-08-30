@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}"{% if LANGUAGE_BIDI %} dir="rtl"{% endif %}>
+{% load pages_tags mezzanine_tags i18n staticfiles %}
+
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
+<meta name="description" content="{% block meta_description %}{% endblock %}">
+<title>{% block meta_title %}{% endblock %}{% if settings.SITE_TITLE %} | {{ settings.SITE_TITLE }}{% endif %}</title>
+<link rel="shortcut icon" href="{% static "img/favicon.ico" %}">
+
+{% ifinstalled mezzanine.blog %}
+<link rel="alternate" type="application/rss+xml" title="RSS" href="{% url "blog_post_feed" "rss" %}">
+<link rel="alternate" type="application/atom+xml" title="Atom" href="{% url "blog_post_feed" "atom" %}">
+{% endifinstalled %}
+
+{% compress css %}
+<link rel="stylesheet" href="{% static "css/bootstrap.css" %}">
+<link rel="stylesheet" href="{% static "css/mezzanine.css" %}">
+<link rel="stylesheet" href="{% static "css/bootstrap-theme.css" %}">
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+{% if LANGUAGE_BIDI %}
+<link rel="stylesheet" href="{% static "css/bootstrap-rtl.css" %}">
+{% endif %}
+{% ifinstalled cartridge.shop %}
+<link rel="stylesheet" href="{% static "css/cartridge.css" %}">
+{% if LANGUAGE_BIDI %}
+<link rel="stylesheet" href="{% static "css/cartridge.rtl.css" %}">
+{% endif %}
+{% endifinstalled %}
+{% block extra_css %}{% endblock %}
+{% endcompress %}
+
+{% compress js %}
+<script src="{% static "mezzanine/js/"|add:settings.JQUERY_FILENAME %}"></script>
+<script src="{% static "js/bootstrap.js" %}"></script>
+<script src="{% static "js/bootstrap-extras.js" %}"></script>
+{% block extra_js %}{% endblock %}
+{% endcompress %}
+
+<!--[if lt IE 9]>
+<script src="{% static "js/html5shiv.js" %}"></script>
+<script src="{% static "js/respond.min.js" %}"></script>
+<![endif]-->
+
+{% block extra_head %}{% endblock %}
+</head>
+
+<body id="{% block body_id %}body{% endblock %}">
+
+    <nav>
+        <div class="nav-wrapper indigo darken-4">
+          <a href="#" class="brand-logo">{% block navbar_title %}
+            {% if settings.SITE_TITLE %}<a class="brand-logo" href="/">{{ settings.SITE_TITLE }}</a>{% endif %}
+            {% endblock%}</a>
+            {% block navbar_dropdown_menu %}{% page_menu "pages/menus/dropdown.html" %}{% endblock%}
+
+            
+                   
+          
+        </div>
+      </nav>
+<main><div class="row">
+
+        <div class="col s3 indigo darken-4 white-text">
+                <h4>{% block title %}{% endblock %}</h4>
+                <ul class="breadcrumb">
+                        {% spaceless %}
+                        {% block breadcrumb_menu %}{% page_menu "pages/menus/breadcrumb.html" %}{% endblock %}
+                        {% endspaceless %}
+                </ul>
+                {% block left_panel %}
+                <div class="panel panel-default tree">{% page_menu "pages/menus/tree.html" %}</div>
+                {% endblock %}
+        </div>
+        <div class="col s8"><span class="flow-text">
+
+                {% block main %}{% endblock %}
+
+        </span></div>
+      
+    </div></main>
+
+<footer class="page-footer indigo darken-4">
+        <div class="container">
+          <div class="row">
+            <div class="col l6 m6 s12">
+              <h5 class="white-text">Search</h5>
+              {% block navbar_search_form %}{% search_form "all" %}{% endblock %}
+            </div>
+            <div class="col l6 m6 s12" >
+              <h5 class="white-text">Links</h5>
+              <ul>
+                    <li><a class="grey-text text-lighten-4" href="https://www.sololearn.com/Profile/14782456">Sololearn</a></li>
+                    <li><a class="grey-text text-lighten-4" href="http://www.github.com/alexmercedcoder">Github</a></li>
+                    <li><a class="grey-text text-lighten-4" href="https://codepen.io/AlexMercedCoder/">CodePen</a></li>
+                    <li><a class="grey-text text-lighten-4" href="https://www.hackerrank.com/alexmerced">HackerRank</a></li>
+                  </ul>
+            </div>
+          </div>
+        </div>
+
+      </footer>
+
+
+{% block footer_js %}
+{% include "includes/footer_scripts.html" %}
+{% endblock %}
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>$(document).ready(function(){
+    $('select').formSelect();
+  });</script>
+</body>
+</html>
